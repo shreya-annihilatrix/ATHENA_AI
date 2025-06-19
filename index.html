@@ -12,7 +12,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
-    <style>
+        <style>
+
+        /* Dark Mode Styles - (✅ Add this at top) */
+        body.dark {
+            background-color: #1a1a1a;
+            color: #eaeaea;
+        }
+
+        body.dark .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+        }
+
+        body.dark .text-gray-600 { color: #cccccc; }
+        body.dark .text-gray-400 { color: #bbbbbb; }
+        body.dark .text-gray-500 { color: #aaaaaa; }
+        body.dark .text-gray-300 { color: #999999; }
+        body.dark .bg-gray-50 { background-color: #262626; }
+        body.dark .bg-white { background-color: #333333; }
+        body.dark .bg-gray-900 { background-color: #121212; }
+        body.dark .text-white { color: #eaeaea; }
+
+        /* Navbar glow in dark */
+        body.dark #navbar {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
         :where([class^="ri-"])::before { content: "\f3c2"; }
         
         body {
@@ -343,10 +370,13 @@
                     <a href="#testimonials" class="text-white hover:text-primary transition-colors ripple">Testimonials</a>
                     <a href="#contact" class="text-white hover:text-primary transition-colors ripple">Contact</a>
                 </div>
-                
-                <button class="md:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button">
-                    <i class="ri-menu-line text-2xl text-white"></i>
+
+        <!-- Light/Dark Toggle Button -->
+                <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center ripple text-white hover:text-primary transition-colors ml-4">
+                    <i id="theme-icon" class="ri-moon-line text-2xl"></i>
                 </button>
+
+
             </div>
             
             <!-- Mobile Menu -->
@@ -1327,5 +1357,32 @@
             });
         });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+            icon.classList.remove('ri-moon-line');
+            icon.classList.add('ri-sun-line');
+        }
+
+        toggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark');
+            if (document.body.classList.contains('dark')) {
+                icon.classList.remove('ri-moon-line');
+                icon.classList.add('ri-sun-line');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('ri-sun-line');
+                icon.classList.add('ri-moon-line');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
